@@ -239,6 +239,46 @@ for i=1:13
     fwrite(arduino, zTEXT(i), 'char');
 end
 
+% FIXME: 위치 수정
+global h2
+%global h4
+global time
+
+% FIXME: Bdegree2는 두번째 모터를 위한 값 -> 삭제?
+double Bdegree1;
+%double Bdegree2;
+
+Bdegree1 = 0;
+%Bdegree2 = 0;
+
+h2 = plot(handles.axes1, time, Bdegree1, 'o', 'MarkerSize', 5, 'MarkerFaceColor', 'b');
+%h4 = plot(handles.axes1, time, Bdegree2, 'o', 'MarkerSize', 5, 'MarkerFaceColor', 'r');
+
+xlim([time-300 time+300]);  % x의 범위는 -300 ~ +300 까지
+ylim([0 360]);
+
+curve1 = animatedline('color', 'g');
+%curve2 = animatedline('color', 'r');
+set(gca, 'XLim', xlim, 'YLim', ylim);
+hold on
+
+flushinput(arduino)     % 버퍼 비우는 명령어. 그래프 값 딜레이를 없애줌
+
+while 1
+    time = time + 1;
+    Bdegree1 = str2num(fscanf(arduino));
+    disp(Bdegree1)
+    %Bdegree2 = str2num(fscanf(arduino));
+    xlim([time-300 time+300]);
+    set(h2, 'XData', time, 'YData', Bdegree1);
+    %set(h4, 'XData', time, 'YData', Bdegree2);
+    hold on
+    
+    addpoints(curve1, time, Bdegree1);
+    %addpoints(curve2, time, Bdegree2);
+    drawnow;
+end
+
 
 % --- Executes on button press in pushbutton5.
 function pushbutton5_Callback(hObject, eventdata, handles)
@@ -255,41 +295,7 @@ hold on
 fopen(arduino);
 time = 0;
 
-% FIXME: 위치 수정
-global h2
-global h4
 
-% FIXME: Bdegree2는 두번째 모터를 위한 값 -> 삭제?
-double Bdegree1;
-double Bdegree2;
-
-Bdegree1 = 0;
-Bdegree2 = 0;
-
-h2 = plot(handles.axes1, time, Bdegree1, 'o', 'MarkerSize', 5, 'MarkerFaceColor', 'b');
-h4 = plot(handles.axes1, time, Bdegree2, 'o', 'MarkerSize', 5, 'MarkerFaceColor', 'r');
-
-xlim([time-300 time+300]);  % x의 범위는 -300 ~ +300 까지
-ylim([0 360]);
-
-curve1 = animatedline('color', 'g');
-curve2 = animatedline('color', 'r');
-set(gca, 'XLim', xlim, 'YLim', ylim);
-hold on
-
-while 1
-    time = time + 1;
-    Bdegree1 = str2num(fscanf(arduino));
-    Bdegree2 = str2num(fscanf(arduino));
-    xlim([time-300 time+300]);
-    set(h2, 'XData', time, 'YData', Bdegree1);
-    set(h4, 'XData', time, 'YData', Bdegree2);
-    hold on
-    
-    addpoints(curve1, time, Bdegree1);
-    addpoints(curve2, time, Bdegree2);
-    drawnow;
-end
 
 
 
