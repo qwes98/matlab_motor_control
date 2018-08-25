@@ -208,38 +208,37 @@ function pushbutton4_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 global arduino;
-zTEXT = ['a'; '0'; '0'; 'b'; '0'; '0'; '0'; '0'; 'c'; '0'; '0'; '0'; '0'];
+zTEXT = ['y';'a'; '0'; '0'; 'b'; '0'; '0'; '0'; '0'; 'c'; '0'; '0'; '0'; '0'; 'z'];
 
 IDTEXT = str2double(get(handles.edit1, 'String'));
 num1 = floor(IDTEXT / 10);
-zTEXT(2) = int2str(num1);
+zTEXT(3) = int2str(num1);
 num2 = floor(IDTEXT - num1*10);
-zTEXT(3) = int2str(num2);
+zTEXT(4) = int2str(num2);
 
 degreeTEXT = str2double(get(handles.edit2, 'String'));
 num3 = floor(degreeTEXT/1000);
-zTEXT(5) = int2str(num3);
+zTEXT(6) = int2str(num3);
 num4 = floor((degreeTEXT - num3*1000)/100);
-zTEXT(6) = int2str(num4);
+zTEXT(7) = int2str(num4);
 num5 = floor((degreeTEXT - num3*1000 - num4*100)/10);
-zTEXT(7) = int2str(num5);
+zTEXT(8) = int2str(num5);
 num6 = floor(degreeTEXT - num3*1000 - num4*100 - num5*10);
-zTEXT(8) = int2str(num6);
+zTEXT(9) = int2str(num6);
 
 freqTEXT = str2double(get(handles.edit3, 'String'));
 num7 = floor(freqTEXT/1000);
-zTEXT(10) = int2str(num7);
+zTEXT(11) = int2str(num7);
 num8 = floor((freqTEXT - num7*1000)/100);
-zTEXT(11) = int2str(num8);
+zTEXT(12) = int2str(num8);
 num9 = floor((freqTEXT - num7*1000 - num8*100)/10);
-zTEXT(12) = int2str(num9);
+zTEXT(13) = int2str(num9);
 num10 = floor(freqTEXT - num7*1000 - num8*100 - num9*10);
-zTEXT(13) = int2str(num10);
-for i=1:13
+zTEXT(14) = int2str(num10);
+for i=1:15
     fwrite(arduino, zTEXT(i), 'char');
 end
 
-% FIXME: 위치 수정
 global h2
 %global h4
 global time
