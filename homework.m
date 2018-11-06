@@ -4,7 +4,7 @@ function varargout = homework(varargin)
 %      singleton*.
 %
 %      H = HOMEWORK returns the handle to a new HOMEWORK or the handle to
-%      the existing singleton*.
+%      the existing singleton*.     
 %
 %      HOMEWORK('CALLBACK',hObject,eventData,handles,...) calls the local
 %      function named CALLBACK in HOMEWORK.M with the given input arguments.
@@ -22,7 +22,7 @@ function varargout = homework(varargin)
 
 % Edit the above text to modify the response to help homework
 
-% Last Modified by GUIDE v2.5 17-Aug-2018 04:16:25
+% Last Modified by GUIDE v2.5 10-Sep-2018 19:08:47
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -208,81 +208,120 @@ function pushbutton4_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 global arduino;
-zTEXT = ['a'; '0'; '0'; 'b'; '0'; '0'; '0'; '0'; 'c'; '0'; '0'; '0'; '0'];
+zTEXT = ['y';'a'; '0'; '0'; 'b'; '0'; '0'; '0'; '0'; 'c'; '0'; '0'; '0'; '0'; 'd'; '0'; '0'; 'e'; '0'; '0'; '0'; '0'; 'f'; '0'; '0'; '0'; '0'; 'm'; '0'; 'z'];
 
 IDTEXT = str2double(get(handles.edit1, 'String'));
 num1 = floor(IDTEXT / 10);
-zTEXT(2) = int2str(num1);
+zTEXT(3) = int2str(num1);
 num2 = floor(IDTEXT - num1*10);
-zTEXT(3) = int2str(num2);
+zTEXT(4) = int2str(num2);
 
 degreeTEXT = str2double(get(handles.edit2, 'String'));
 num3 = floor(degreeTEXT/1000);
-zTEXT(5) = int2str(num3);
+zTEXT(6) = int2str(num3);
 num4 = floor((degreeTEXT - num3*1000)/100);
-zTEXT(6) = int2str(num4);
+zTEXT(7) = int2str(num4);
 num5 = floor((degreeTEXT - num3*1000 - num4*100)/10);
-zTEXT(7) = int2str(num5);
+zTEXT(8) = int2str(num5);
 num6 = floor(degreeTEXT - num3*1000 - num4*100 - num5*10);
-zTEXT(8) = int2str(num6);
+zTEXT(9) = int2str(num6);
 
 freqTEXT = str2double(get(handles.edit3, 'String'));
 num7 = floor(freqTEXT/1000);
-zTEXT(10) = int2str(num7);
+zTEXT(11) = int2str(num7);
 num8 = floor((freqTEXT - num7*1000)/100);
-zTEXT(11) = int2str(num8);
+zTEXT(12) = int2str(num8);
 num9 = floor((freqTEXT - num7*1000 - num8*100)/10);
-zTEXT(12) = int2str(num9);
+zTEXT(13) = int2str(num9);
 num10 = floor(freqTEXT - num7*1000 - num8*100 - num9*10);
-zTEXT(13) = int2str(num10);
-for i=1:13
+zTEXT(14) = int2str(num10);
+
+IDTEXT2 = str2double(get(handles.edit4, 'String'));
+num11 = floor(IDTEXT2 / 10);
+zTEXT(16) = int2str(num11);
+num12 = floor(IDTEXT2 - num11*10);
+zTEXT(17) = int2str(num12);
+
+degreeTEXT2 = str2double(get(handles.edit5, 'String'));
+num13 = floor(degreeTEXT2/1000);
+zTEXT(19) = int2str(num13);
+num14 = floor((degreeTEXT2 - num13*1000)/100);
+zTEXT(20) = int2str(num14);
+num15 = floor((degreeTEXT2 - num13*1000 - num14*100)/10);
+zTEXT(21) = int2str(num15);
+num16 = floor(degreeTEXT2 - num13*1000 - num14*100 - num15*10);
+zTEXT(22) = int2str(num16);
+
+freqTEXT2 = str2double(get(handles.edit6, 'String'));
+num17 = floor(freqTEXT2/1000);
+zTEXT(24) = int2str(num17);
+num18 = floor((freqTEXT2 - num17*1000)/100);
+zTEXT(25) = int2str(num18);
+num19 = floor((freqTEXT2 - num17*1000 - num18*100)/10);
+zTEXT(26) = int2str(num19);
+num20 = floor(freqTEXT2 - num17*1000 - num18*100 - num19*10);
+zTEXT(27) = int2str(num20);
+
+for i=1:30
     fwrite(arduino, zTEXT(i), 'char');
+    disp(zTEXT(i));
 end
 
-
-% --- Executes on button press in pushbutton5.
-% Start button
-function pushbutton5_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton5 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-delete(instrfindall);     % 통신 포트 초기화
-global arduino;
-
-arduino = serial('COM3', 'BaudRate', 1000000); 
-grid on;        % 그리드를 켠다
-grid minor;     % 세부 그리드를 켠다
-hold on;        % 그리드 고정
-fopen(arduino); 
-time = 0;       % 그래프의 X성분
-
-global time;
-
 global h2
+global h4
+global time
 
-double Bdegree1;    % 모터 값 저장할 변수
+double Bdegree1;
+double Bdegree2;
 
 Bdegree1 = 0;
+Bdegree2 = 0;
 
 h2 = plot(handles.axes1, time, Bdegree1, 'o', 'MarkerSize', 5, 'MarkerFaceColor', 'b');
+h4 = plot(handles.axes1, time, Bdegree2, 'o', 'MarkerSize', 5, 'MarkerFaceColor', 'r');
 
 xlim([time-300 time+300]);  % x의 범위는 -300 ~ +300 까지
 ylim([0 360]);
 
-curve1 = animatedline('color', 'g');    % 애니메이션 라인 생성
+curve1 = animatedline('color', 'g');
+curve2 = animatedline('color', 'r');
 set(gca, 'XLim', xlim, 'YLim', ylim);
 hold on
+
+flushinput(arduino)     % 버퍼 비우는 명령어. 그래프 값 딜레이를 없애줌
 
 while 1
     time = time + 1;
     Bdegree1 = str2num(fscanf(arduino));
+    %disp(Bdegree1)
+    Bdegree2 = str2num(fscanf(arduino));
     xlim([time-300 time+300]);
     set(h2, 'XData', time, 'YData', Bdegree1);
+    set(h4, 'XData', time, 'YData', Bdegree2);
     hold on
     
-    addpoints(curve1, time, Bdegree1);  % 라인 그리기
-    drawnow;    % 그린 거 업데이트
+    addpoints(curve1, time, Bdegree1);
+    addpoints(curve2, time, Bdegree2);
+    drawnow;
 end
+
+
+% --- Executes on button press in pushbutton5.
+function pushbutton5_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton5 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+delete(instrfindall);
+global arduino;
+global time;
+arduino = serial('COM3', 'BaudRate', 1000000); 
+grid on
+grid minor
+hold on
+fopen(arduino);
+time = 0;
+
+
 
 
 
@@ -293,3 +332,232 @@ function pushbutton6_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 global arduino;
 fclose(arduino);
+
+
+
+function edit4_Callback(hObject, eventdata, handles)
+% hObject    handle to edit4 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit4 as text
+%        str2double(get(hObject,'String')) returns contents of edit4 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit4_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit4 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function edit5_Callback(hObject, eventdata, handles)
+% hObject    handle to edit5 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit5 as text
+%        str2double(get(hObject,'String')) returns contents of edit5 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit5_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit5 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function edit6_Callback(hObject, eventdata, handles)
+% hObject    handle to edit6 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit6 as text
+%        str2double(get(hObject,'String')) returns contents of edit6 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit6_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit6 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in pushbutton7.
+function pushbutton7_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton7 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+global arduino;
+zTEXT = ['y';'a'; '0'; '0'; 'b'; '0'; '0'; '0'; '0'; 'c'; '0'; '0'; '0'; '0'; 'd'; '0'; '0'; 'e'; '0'; '0'; '0'; '0'; 'f'; '0'; '0'; '0'; '0'; 'm'; '1'; 'z'];
+
+IDTEXT = str2double(get(handles.edit1, 'String'));
+num1 = floor(IDTEXT / 10);
+zTEXT(3) = int2str(num1);
+num2 = floor(IDTEXT - num1*10);
+zTEXT(4) = int2str(num2);
+
+degreeTEXT = str2double(get(handles.edit2, 'String'));
+num3 = floor(degreeTEXT/1000);
+zTEXT(6) = int2str(num3);
+num4 = floor((degreeTEXT - num3*1000)/100);
+zTEXT(7) = int2str(num4);
+num5 = floor((degreeTEXT - num3*1000 - num4*100)/10);
+zTEXT(8) = int2str(num5);
+num6 = floor(degreeTEXT - num3*1000 - num4*100 - num5*10);
+zTEXT(9) = int2str(num6);
+
+freqTEXT = str2double(get(handles.edit3, 'String'));
+num7 = floor(freqTEXT/1000);
+zTEXT(11) = int2str(num7);
+num8 = floor((freqTEXT - num7*1000)/100);
+zTEXT(12) = int2str(num8);
+num9 = floor((freqTEXT - num7*1000 - num8*100)/10);
+zTEXT(13) = int2str(num9);
+num10 = floor(freqTEXT - num7*1000 - num8*100 - num9*10);
+zTEXT(14) = int2str(num10);
+
+IDTEXT2 = str2double(get(handles.edit4, 'String'));
+num11 = floor(IDTEXT2 / 10);
+zTEXT(16) = int2str(num11);
+num12 = floor(IDTEXT2 - num11*10);
+zTEXT(17) = int2str(num12);
+
+degreeTEXT2 = str2double(get(handles.edit5, 'String'));
+num13 = floor(degreeTEXT2/1000);
+zTEXT(19) = int2str(num13);
+num14 = floor((degreeTEXT2 - num13*1000)/100);
+zTEXT(20) = int2str(num14);
+num15 = floor((degreeTEXT2 - num13*1000 - num14*100)/10);
+zTEXT(21) = int2str(num15);
+num16 = floor(degreeTEXT2 - num13*1000 - num14*100 - num15*10);
+zTEXT(22) = int2str(num16);
+
+freqTEXT2 = str2double(get(handles.edit6, 'String'));
+num17 = floor(freqTEXT2/1000);
+zTEXT(24) = int2str(num17);
+num18 = floor((freqTEXT2 - num17*1000)/100);
+zTEXT(25) = int2str(num18);
+num19 = floor((freqTEXT2 - num17*1000 - num18*100)/10);
+zTEXT(26) = int2str(num19);
+num20 = floor(freqTEXT2 - num17*1000 - num18*100 - num19*10);
+zTEXT(27) = int2str(num20);
+
+for i=1:30
+    fwrite(arduino, zTEXT(i), 'char');
+    disp(zTEXT(i));
+end
+
+global h2
+global h4
+global time
+
+double Bdegree1;
+double Bdegree2;
+
+Bdegree1 = 0;
+Bdegree2 = 0;
+
+h2 = plot(handles.axes1, time, Bdegree1, 'o', 'MarkerSize', 5, 'MarkerFaceColor', 'b');
+h4 = plot(handles.axes1, time, Bdegree2, 'o', 'MarkerSize', 5, 'MarkerFaceColor', 'r');
+
+xlim([time-300 time+300]);  % x의 범위는 -300 ~ +300 까지
+ylim([0 360]);
+
+curve1 = animatedline('color', 'g');
+curve2 = animatedline('color', 'r');
+set(gca, 'XLim', xlim, 'YLim', ylim);
+hold on
+
+flushinput(arduino)     % 버퍼 비우는 명령어. 그래프 값 딜레이를 없애줌
+
+while 1
+    time = time + 1;
+    Bdegree1 = str2num(fscanf(arduino));
+    %disp(Bdegree1)
+    Bdegree2 = str2num(fscanf(arduino));
+    xlim([time-300 time+300]);
+    set(h2, 'XData', time, 'YData', Bdegree1);
+    set(h4, 'XData', time, 'YData', Bdegree2);
+    hold on
+    
+    addpoints(curve1, time, Bdegree1);
+    addpoints(curve2, time, Bdegree2);
+    drawnow;
+end
+
+
+
+
+
+% --- Executes on button press in pushbutton8.
+function pushbutton8_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton8 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global arduino;
+zTEXT = ['y';'m'; '2'; 'z'];
+
+for i=1:4
+    fwrite(arduino, zTEXT(i), 'char');
+    disp(zTEXT(i));
+end
+
+global h2
+global h4
+global time
+
+double Bdegree1;
+double Bdegree2;
+
+Bdegree1 = 0;
+Bdegree2 = 0;
+
+h2 = plot(handles.axes1, time, Bdegree1, 'o', 'MarkerSize', 5, 'MarkerFaceColor', 'b');
+h4 = plot(handles.axes1, time, Bdegree2, 'o', 'MarkerSize', 5, 'MarkerFaceColor', 'r');
+
+xlim([time-300 time+300]);  % x의 범위는 -300 ~ +300 까지
+ylim([0 360]);
+
+curve1 = animatedline('color', 'g');
+curve2 = animatedline('color', 'r');
+set(gca, 'XLim', xlim, 'YLim', ylim);
+hold on
+
+flushinput(arduino)     % 버퍼 비우는 명령어. 그래프 값 딜레이를 없애줌
+
+while 1
+    time = time + 1;
+    Bdegree1 = str2num(fscanf(arduino));
+    %disp(Bdegree1)
+    Bdegree2 = str2num(fscanf(arduino));
+    xlim([time-300 time+300]);
+    set(h2, 'XData', time, 'YData', Bdegree1);
+    set(h4, 'XData', time, 'YData', Bdegree2);
+    hold on
+    
+    addpoints(curve1, time, Bdegree1);
+    addpoints(curve2, time, Bdegree2);
+    drawnow;
+end
