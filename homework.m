@@ -22,7 +22,7 @@ function varargout = homework(varargin)
 
 % Edit the above text to modify the response to help homework
 
-% Last Modified by GUIDE v2.5 10-Sep-2018 19:08:47
+% Last Modified by GUIDE v2.5 19-Nov-2018 19:20:30
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -217,6 +217,7 @@ num2 = floor(IDTEXT - num1*10);
 zTEXT(4) = int2str(num2);
 
 degreeTEXT = str2double(get(handles.edit2, 'String'));
+degreeTEXT = degreeTEXT*(1024/90.0) + 1024;
 num3 = floor(degreeTEXT/1000);
 zTEXT(6) = int2str(num3);
 num4 = floor((degreeTEXT - num3*1000)/100);
@@ -243,6 +244,7 @@ num12 = floor(IDTEXT2 - num11*10);
 zTEXT(17) = int2str(num12);
 
 degreeTEXT2 = str2double(get(handles.edit5, 'String'));
+degreeTEXT2 = degreeTEXT2*(1024/90.0) + 2048;
 num13 = floor(degreeTEXT2/1000);
 zTEXT(19) = int2str(num13);
 num14 = floor((degreeTEXT2 - num13*1000)/100);
@@ -281,7 +283,7 @@ h2 = plot(handles.axes1, time, Bdegree1, 'o', 'MarkerSize', 5, 'MarkerFaceColor'
 h4 = plot(handles.axes1, time, Bdegree2, 'o', 'MarkerSize', 5, 'MarkerFaceColor', 'r');
 
 xlim([time-300 time+300]);  % x의 범위는 -300 ~ +300 까지
-ylim([0 360]);
+ylim([-200 200]);
 
 curve1 = animatedline('color', 'g');
 curve2 = animatedline('color', 'r');
@@ -293,8 +295,10 @@ flushinput(arduino)     % 버퍼 비우는 명령어. 그래프 값 딜레이를 없애줌
 while 1
     time = time + 1;
     Bdegree1 = str2num(fscanf(arduino));
+    Bdegree1 = Bdegree1 - 90;
     %disp(Bdegree1)
     Bdegree2 = str2num(fscanf(arduino));
+    Bdegree2 = Bdegree2 - 180;
     xlim([time-300 time+300]);
     set(h2, 'XData', time, 'YData', Bdegree1);
     set(h4, 'XData', time, 'YData', Bdegree2);
@@ -419,6 +423,7 @@ num2 = floor(IDTEXT - num1*10);
 zTEXT(4) = int2str(num2);
 
 degreeTEXT = str2double(get(handles.edit2, 'String'));
+degreeTEXT = degreeTEXT*(1024/90.0) + 1024;
 num3 = floor(degreeTEXT/1000);
 zTEXT(6) = int2str(num3);
 num4 = floor((degreeTEXT - num3*1000)/100);
@@ -445,6 +450,7 @@ num12 = floor(IDTEXT2 - num11*10);
 zTEXT(17) = int2str(num12);
 
 degreeTEXT2 = str2double(get(handles.edit5, 'String'));
+degreeTEXT2 = degreeTEXT2*(1024/90.0) + 2048;
 num13 = floor(degreeTEXT2/1000);
 zTEXT(19) = int2str(num13);
 num14 = floor((degreeTEXT2 - num13*1000)/100);
@@ -483,7 +489,7 @@ h2 = plot(handles.axes1, time, Bdegree1, 'o', 'MarkerSize', 5, 'MarkerFaceColor'
 h4 = plot(handles.axes1, time, Bdegree2, 'o', 'MarkerSize', 5, 'MarkerFaceColor', 'r');
 
 xlim([time-300 time+300]);  % x의 범위는 -300 ~ +300 까지
-ylim([0 360]);
+ylim([-200 200]);
 
 curve1 = animatedline('color', 'g');
 curve2 = animatedline('color', 'r');
@@ -495,8 +501,10 @@ flushinput(arduino)     % 버퍼 비우는 명령어. 그래프 값 딜레이를 없애줌
 while 1
     time = time + 1;
     Bdegree1 = str2num(fscanf(arduino));
+    Bdegree1 = Bdegree1 - 90;
     %disp(Bdegree1)
     Bdegree2 = str2num(fscanf(arduino));
+    Bdegree2 = Bdegree2 - 180;
     xlim([time-300 time+300]);
     set(h2, 'XData', time, 'YData', Bdegree1);
     set(h4, 'XData', time, 'YData', Bdegree2);
@@ -538,7 +546,7 @@ h2 = plot(handles.axes1, time, Bdegree1, 'o', 'MarkerSize', 5, 'MarkerFaceColor'
 h4 = plot(handles.axes1, time, Bdegree2, 'o', 'MarkerSize', 5, 'MarkerFaceColor', 'r');
 
 xlim([time-300 time+300]);  % x의 범위는 -300 ~ +300 까지
-ylim([0 360]);
+ylim([-200 200]);
 
 curve1 = animatedline('color', 'g');
 curve2 = animatedline('color', 'r');
@@ -550,8 +558,10 @@ flushinput(arduino)     % 버퍼 비우는 명령어. 그래프 값 딜레이를 없애줌
 while 1
     time = time + 1;
     Bdegree1 = str2num(fscanf(arduino));
+    Bdegree1 = Bdegree1 - 90;
     %disp(Bdegree1)
     Bdegree2 = str2num(fscanf(arduino));
+    Bdegree2 = Bdegree2 - 180;
     xlim([time-300 time+300]);
     set(h2, 'XData', time, 'YData', Bdegree1);
     set(h4, 'XData', time, 'YData', Bdegree2);
