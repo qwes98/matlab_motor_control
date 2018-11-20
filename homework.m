@@ -279,17 +279,18 @@ double Bdegree2;
 Bdegree1 = 0;
 Bdegree2 = 0;
 
+x1 = 0;
+y1 = 0;
+
 L1 = 15;
 L2 = 15;
 
-h2 = plot(handles.axes1, time, Bdegree1, 'o', 'MarkerSize', 5, 'MarkerFaceColor', 'b');
-h4 = plot(handles.axes1, time, Bdegree2, 'o', 'MarkerSize', 5, 'MarkerFaceColor', 'r');
+h2 = plot(handles.axes1, x1, y1, 'o', 'MarkerSize', 5, 'MarkerFaceColor', 'b');
 
-xlim([time-300 time+300]);  % x의 범위는 -300 ~ +300 까지
+xlim([-50 50]);  % x의 범위는 -300 ~ +300 까지
 ylim([-50 50]);
 
 curve1 = animatedline('color', 'g');
-curve2 = animatedline('color', 'r');
 set(gca, 'XLim', xlim, 'YLim', ylim);
 hold on
 
@@ -304,14 +305,12 @@ while 1
     Bdegree2 = (Bdegree2 - 180) * pi / 180;
     
     x1 = L1 * cos(Bdegree1) + L2 * cos(Bdegree1 + Bdegree2);
-    x2 = L1 * sin(Bdegree1) + L2 * sin(Bdegree1 + Bdegree2);
-    xlim([time-300 time+300]);
-    set(h2, 'XData', time, 'YData', x1);
-    set(h4, 'XData', time, 'YData', x2);
+    y1 = L1 * sin(Bdegree1) + L2 * sin(Bdegree1 + Bdegree2);
+    xlim([-50 50]);
+    set(h2, 'XData', x1, 'YData', y1);
     hold on
     
-    addpoints(curve1, time, x1);
-    addpoints(curve2, time, x2);
+    addpoints(curve1, x1, y1);
     drawnow;
 end
 
@@ -481,6 +480,7 @@ for i=1:30
     disp(zTEXT(i));
 end
 
+
 global h2
 global h4
 global time
@@ -491,17 +491,18 @@ double Bdegree2;
 Bdegree1 = 0;
 Bdegree2 = 0;
 
+x1 = 0;
+y1 = 0;
+
 L1 = 15;
 L2 = 15;
 
-h2 = plot(handles.axes1, time, Bdegree1, 'o', 'MarkerSize', 5, 'MarkerFaceColor', 'b');
-h4 = plot(handles.axes1, time, Bdegree2, 'o', 'MarkerSize', 5, 'MarkerFaceColor', 'r');
+h2 = plot(handles.axes1, x1, y1, 'o', 'MarkerSize', 5, 'MarkerFaceColor', 'b');
 
-xlim([time-300 time+300]);  % x의 범위는 -300 ~ +300 까지
+xlim([-50 50]);  % x의 범위는 -300 ~ +300 까지
 ylim([-50 50]);
 
 curve1 = animatedline('color', 'g');
-curve2 = animatedline('color', 'r');
 set(gca, 'XLim', xlim, 'YLim', ylim);
 hold on
 
@@ -516,16 +517,15 @@ while 1
     Bdegree2 = (Bdegree2 - 180) * pi / 180;
     
     x1 = L1 * cos(Bdegree1) + L2 * cos(Bdegree1 + Bdegree2);
-    x2 = L1 * sin(Bdegree1) + L2 * sin(Bdegree1 + Bdegree2);
-    xlim([time-300 time+300]);
-    set(h2, 'XData', time, 'YData', x1);
-    set(h4, 'XData', time, 'YData', x2);
+    y1 = L1 * sin(Bdegree1) + L2 * sin(Bdegree1 + Bdegree2);
+    xlim([-50 50]);
+    set(h2, 'XData', x1, 'YData', y1);
     hold on
     
-    addpoints(curve1, time, x1);
-    addpoints(curve2, time, x2);
+    addpoints(curve1, x1, y1);
     drawnow;
 end
+
 
 
 
@@ -544,6 +544,7 @@ for i=1:4
     disp(zTEXT(i));
 end
 
+
 global h2
 global h4
 global time
@@ -554,17 +555,18 @@ double Bdegree2;
 Bdegree1 = 0;
 Bdegree2 = 0;
 
+x1 = 0;
+y1 = 0;
+
 L1 = 15;
 L2 = 15;
 
-h2 = plot(handles.axes1, time, Bdegree1, 'o', 'MarkerSize', 5, 'MarkerFaceColor', 'b');
-h4 = plot(handles.axes1, time, Bdegree2, 'o', 'MarkerSize', 5, 'MarkerFaceColor', 'r');
+h2 = plot(handles.axes1, x1, y1, 'o', 'MarkerSize', 5, 'MarkerFaceColor', 'b');
 
-xlim([time-300 time+300]);  % x의 범위는 -300 ~ +300 까지
+xlim([-50 50]);  % x의 범위는 -300 ~ +300 까지
 ylim([-50 50]);
 
 curve1 = animatedline('color', 'g');
-curve2 = animatedline('color', 'r');
 set(gca, 'XLim', xlim, 'YLim', ylim);
 hold on
 
@@ -579,13 +581,11 @@ while 1
     Bdegree2 = (Bdegree2 - 180) * pi / 180;
     
     x1 = L1 * cos(Bdegree1) + L2 * cos(Bdegree1 + Bdegree2);
-    x2 = L1 * sin(Bdegree1) + L2 * sin(Bdegree1 + Bdegree2);
-    xlim([time-300 time+300]);
-    set(h2, 'XData', time, 'YData', x1);
-    set(h4, 'XData', time, 'YData', x2);
+    y1 = L1 * sin(Bdegree1) + L2 * sin(Bdegree1 + Bdegree2);
+    xlim([-50 50]);
+    set(h2, 'XData', x1, 'YData', y1);
     hold on
     
-    addpoints(curve1, time, x1);
-    addpoints(curve2, time, x2);
+    addpoints(curve1, x1, y1);
     drawnow;
 end
