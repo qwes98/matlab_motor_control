@@ -279,11 +279,14 @@ double Bdegree2;
 Bdegree1 = 0;
 Bdegree2 = 0;
 
+L1 = 15;
+L2 = 15;
+
 h2 = plot(handles.axes1, time, Bdegree1, 'o', 'MarkerSize', 5, 'MarkerFaceColor', 'b');
 h4 = plot(handles.axes1, time, Bdegree2, 'o', 'MarkerSize', 5, 'MarkerFaceColor', 'r');
 
 xlim([time-300 time+300]);  % x의 범위는 -300 ~ +300 까지
-ylim([-200 200]);
+ylim([-50 50]);
 
 curve1 = animatedline('color', 'g');
 curve2 = animatedline('color', 'r');
@@ -295,17 +298,20 @@ flushinput(arduino)     % 버퍼 비우는 명령어. 그래프 값 딜레이를 없애줌
 while 1
     time = time + 1;
     Bdegree1 = str2num(fscanf(arduino));
-    Bdegree1 = Bdegree1 - 90;
+    Bdegree1 = (Bdegree1 - 90) * pi / 180;
     %disp(Bdegree1)
     Bdegree2 = str2num(fscanf(arduino));
-    Bdegree2 = Bdegree2 - 180;
+    Bdegree2 = (Bdegree2 - 180) * pi / 180;
+    
+    x1 = L1 * cos(Bdegree1) + L2 * cos(Bdegree1 + Bdegree2);
+    x2 = L1 * sin(Bdegree1) + L2 * sin(Bdegree1 + Bdegree2);
     xlim([time-300 time+300]);
-    set(h2, 'XData', time, 'YData', Bdegree1);
-    set(h4, 'XData', time, 'YData', Bdegree2);
+    set(h2, 'XData', time, 'YData', x1);
+    set(h4, 'XData', time, 'YData', x2);
     hold on
     
-    addpoints(curve1, time, Bdegree1);
-    addpoints(curve2, time, Bdegree2);
+    addpoints(curve1, time, x1);
+    addpoints(curve2, time, x2);
     drawnow;
 end
 
@@ -485,11 +491,14 @@ double Bdegree2;
 Bdegree1 = 0;
 Bdegree2 = 0;
 
+L1 = 15;
+L2 = 15;
+
 h2 = plot(handles.axes1, time, Bdegree1, 'o', 'MarkerSize', 5, 'MarkerFaceColor', 'b');
 h4 = plot(handles.axes1, time, Bdegree2, 'o', 'MarkerSize', 5, 'MarkerFaceColor', 'r');
 
 xlim([time-300 time+300]);  % x의 범위는 -300 ~ +300 까지
-ylim([-200 200]);
+ylim([-50 50]);
 
 curve1 = animatedline('color', 'g');
 curve2 = animatedline('color', 'r');
@@ -501,17 +510,20 @@ flushinput(arduino)     % 버퍼 비우는 명령어. 그래프 값 딜레이를 없애줌
 while 1
     time = time + 1;
     Bdegree1 = str2num(fscanf(arduino));
-    Bdegree1 = Bdegree1 - 90;
+    Bdegree1 = (Bdegree1 - 90) * pi / 180;
     %disp(Bdegree1)
     Bdegree2 = str2num(fscanf(arduino));
-    Bdegree2 = Bdegree2 - 180;
+    Bdegree2 = (Bdegree2 - 180) * pi / 180;
+    
+    x1 = L1 * cos(Bdegree1) + L2 * cos(Bdegree1 + Bdegree2);
+    x2 = L1 * sin(Bdegree1) + L2 * sin(Bdegree1 + Bdegree2);
     xlim([time-300 time+300]);
-    set(h2, 'XData', time, 'YData', Bdegree1);
-    set(h4, 'XData', time, 'YData', Bdegree2);
+    set(h2, 'XData', time, 'YData', x1);
+    set(h4, 'XData', time, 'YData', x2);
     hold on
     
-    addpoints(curve1, time, Bdegree1);
-    addpoints(curve2, time, Bdegree2);
+    addpoints(curve1, time, x1);
+    addpoints(curve2, time, x2);
     drawnow;
 end
 
@@ -542,11 +554,14 @@ double Bdegree2;
 Bdegree1 = 0;
 Bdegree2 = 0;
 
+L1 = 15;
+L2 = 15;
+
 h2 = plot(handles.axes1, time, Bdegree1, 'o', 'MarkerSize', 5, 'MarkerFaceColor', 'b');
 h4 = plot(handles.axes1, time, Bdegree2, 'o', 'MarkerSize', 5, 'MarkerFaceColor', 'r');
 
 xlim([time-300 time+300]);  % x의 범위는 -300 ~ +300 까지
-ylim([-200 200]);
+ylim([-50 50]);
 
 curve1 = animatedline('color', 'g');
 curve2 = animatedline('color', 'r');
@@ -558,16 +573,19 @@ flushinput(arduino)     % 버퍼 비우는 명령어. 그래프 값 딜레이를 없애줌
 while 1
     time = time + 1;
     Bdegree1 = str2num(fscanf(arduino));
-    Bdegree1 = Bdegree1 - 90;
+    Bdegree1 = (Bdegree1 - 90) * pi / 180;
     %disp(Bdegree1)
     Bdegree2 = str2num(fscanf(arduino));
-    Bdegree2 = Bdegree2 - 180;
+    Bdegree2 = (Bdegree2 - 180) * pi / 180;
+    
+    x1 = L1 * cos(Bdegree1) + L2 * cos(Bdegree1 + Bdegree2);
+    x2 = L1 * sin(Bdegree1) + L2 * sin(Bdegree1 + Bdegree2);
     xlim([time-300 time+300]);
-    set(h2, 'XData', time, 'YData', Bdegree1);
-    set(h4, 'XData', time, 'YData', Bdegree2);
+    set(h2, 'XData', time, 'YData', x1);
+    set(h4, 'XData', time, 'YData', x2);
     hold on
     
-    addpoints(curve1, time, Bdegree1);
-    addpoints(curve2, time, Bdegree2);
+    addpoints(curve1, time, x1);
+    addpoints(curve2, time, x2);
     drawnow;
 end
