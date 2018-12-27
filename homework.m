@@ -22,7 +22,7 @@ function varargout = homework(varargin)
 
 % Edit the above text to modify the response to help homework
 
-% Last Modified by GUIDE v2.5 19-Nov-2018 19:20:30
+% Last Modified by GUIDE v2.5 27-Dec-2018 16:25:46
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -560,6 +560,195 @@ y1 = 0;
 
 L1 = 15;
 L2 = 15;
+
+h2 = plot(handles.axes1, x1, y1, 'o', 'MarkerSize', 5, 'MarkerFaceColor', 'b');
+
+xlim([-50 50]);  % x의 범위는 -300 ~ +300 까지
+ylim([-50 50]);
+
+curve1 = animatedline('color', 'g');
+set(gca, 'XLim', xlim, 'YLim', ylim);
+hold on
+
+flushinput(arduino)     % 버퍼 비우는 명령어. 그래프 값 딜레이를 없애줌
+
+while 1
+    time = time + 1;
+    Bdegree1 = str2num(fscanf(arduino));
+    Bdegree1 = (Bdegree1 - 90) * pi / 180;
+    %disp(Bdegree1)
+    Bdegree2 = str2num(fscanf(arduino));
+    Bdegree2 = (Bdegree2 - 180) * pi / 180;
+    
+    x1 = L1 * cos(Bdegree1) + L2 * cos(Bdegree1 + Bdegree2);
+    y1 = L1 * sin(Bdegree1) + L2 * sin(Bdegree1 + Bdegree2);
+    xlim([-50 50]);
+    set(h2, 'XData', x1, 'YData', y1);
+    hold on
+    
+    addpoints(curve1, x1, y1);
+    drawnow;
+end
+
+
+
+function edit7_Callback(hObject, eventdata, handles)
+% hObject    handle to edit7 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit7 as text
+%        str2double(get(hObject,'String')) returns contents of edit7 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit7_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit7 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function edit8_Callback(hObject, eventdata, handles)
+% hObject    handle to edit8 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit8 as text
+%        str2double(get(hObject,'String')) returns contents of edit8 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit8_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit8 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function edit9_Callback(hObject, eventdata, handles)
+% hObject    handle to edit9 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit9 as text
+%        str2double(get(hObject,'String')) returns contents of edit9 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit9_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit9 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in pushbutton9.
+function pushbutton9_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton9 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global arduino;
+
+disp("called");
+
+L1 = 15;
+L2 = 15;
+
+zTEXT = ['y';'a'; '0'; '0'; 'b'; '0'; '0'; '0'; '0'; 'c'; '0'; '0'; '0'; '0'; 'd'; '0'; '0'; 'e'; '0'; '0'; '0'; '0'; 'f'; '0'; '0'; '0'; '0'; 'm'; '0'; 'z'];
+
+IDTEXT = str2double(get(handles.edit1, 'String'));
+num1 = floor(IDTEXT / 10);
+zTEXT(3) = int2str(num1);
+num2 = floor(IDTEXT - num1*10);
+zTEXT(4) = int2str(num2);
+
+IDTEXT2 = str2double(get(handles.edit4, 'String'));
+num11 = floor(IDTEXT2 / 10);
+zTEXT(16) = int2str(num11);
+num12 = floor(IDTEXT2 - num11*10);
+zTEXT(17) = int2str(num12);
+
+goalX = str2double(get(handles.edit7, 'String'));
+goalY = str2double(get(handles.edit9, 'String'));
+theta2 = acos((goalX^2 + goalY^2 - L1^2 - L2^2)/(2*L1*L2));
+theta1 = atan2(goalY, goalX) - atan2(L2*sin(theta2), L1+L2*cos(theta2));
+
+degreeTEXT1 = theta1 * 180 / pi;
+degreeTEXT2 = theta2 * 180 / pi;
+
+% dxl value
+degreeTEXT1 = degreeTEXT1*(1024/90.0) + 1024;
+degreeTEXT2 = degreeTEXT2*(1024/90.0) + 2048;
+
+num3 = floor(degreeTEXT1/1000);
+zTEXT(6) = int2str(num3);
+num4 = floor((degreeTEXT1 - num3*1000)/100);
+zTEXT(7) = int2str(num4);
+num5 = floor((degreeTEXT1 - num3*1000 - num4*100)/10);
+zTEXT(8) = int2str(num5);
+num6 = floor(degreeTEXT1 - num3*1000 - num4*100 - num5*10);
+zTEXT(9) = int2str(num6);
+
+num13 = floor(degreeTEXT2/1000);
+zTEXT(19) = int2str(num13);
+num14 = floor((degreeTEXT2 - num13*1000)/100);
+zTEXT(20) = int2str(num14);
+num15 = floor((degreeTEXT2 - num13*1000 - num14*100)/10);
+zTEXT(21) = int2str(num15);
+num16 = floor(degreeTEXT2 - num13*1000 - num14*100 - num15*10);
+zTEXT(22) = int2str(num16);
+
+freqTEXT = str2double(get(handles.edit8, 'String'));
+num7 = floor(freqTEXT/1000);
+% motor id 1 and 2
+zTEXT(11) = int2str(num7);  
+zTEXT(24) = int2str(num7);
+num8 = floor((freqTEXT - num7*1000)/100);
+zTEXT(12) = int2str(num8);
+zTEXT(25) = int2str(num8);
+num9 = floor((freqTEXT - num7*1000 - num8*100)/10);
+zTEXT(13) = int2str(num9);
+zTEXT(26) = int2str(num9);
+num10 = floor(freqTEXT - num7*1000 - num8*100 - num9*10);
+zTEXT(14) = int2str(num10);
+zTEXT(27) = int2str(num10);
+
+for i=1:30
+    fwrite(arduino, zTEXT(i), 'char');
+    disp(zTEXT(i));
+end
+
+
+global h2
+global h4
+global time
+
+double Bdegree1;
+double Bdegree2;
+
+Bdegree1 = 0;
+Bdegree2 = 0;
+
+x1 = 0;
+y1 = 0;
 
 h2 = plot(handles.axes1, x1, y1, 'o', 'MarkerSize', 5, 'MarkerFaceColor', 'b');
 
